@@ -1,0 +1,46 @@
+<header
+    class="flex justify-center items-center py-4"
+    style="position: sticky; top: 0; z-index: 1000;"
+>
+    <nav class="flex space-x-4 items-center">
+        <a href="#" class="menu-item">Home</a>
+        <a href="#experience" class="menu-item">Experience</a>
+        <a href="/projects" class="menu-item">Projects</a>
+        <a href="/contact" class="menu-item">Contact</a>
+    </nav>
+</header>
+
+<style>
+    .menu-item {
+        transition: transform 0.1s ease-in-out;
+    }
+
+    .menu-item:hover {
+        transform: scale(1.1);
+    }
+
+    .menu-item:active {
+        transform: scale(0.9);
+    }
+
+    .blur-background {
+        transition: all 0.5s ease-in-out;
+        -webkit-transition: all 0.5s ease-in-out;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    }
+</style>
+
+<script defer>
+    window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 10) {
+            setTimeout(function () {
+                header.classList.add("blur-background");
+            }, 500); // Add a delay of 1 second (1000 milliseconds)
+        } else {
+            header.classList.remove("blur-background");
+        }
+    });
+</script>

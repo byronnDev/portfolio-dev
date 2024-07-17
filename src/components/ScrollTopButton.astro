@@ -1,0 +1,31 @@
+<button
+    id="to-top-button"
+    title="Go To Top"
+    class="fixed z-90 bottom-8 right-8 w-16 h-16 drop-shadow-md text-3xl text-gray-950 transition-colors duration-300 ease-in-out inline-flex items-center justify-center rounded-full border border-gray-800 bg-gradient-to-t from-[#8678f9] from-0% to-[#c7d2fe] px-6 font-medium"
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">&uarr;</button
+>
+
+<script>
+    var toTopButton = document.getElementById("to-top-button");
+
+    // Hide the button initially
+    if (toTopButton) {
+        toTopButton.classList.add("hidden");
+    }
+
+    // When the user scrolls down 200px from the top of the document, show the button
+    window.onscroll = function () {
+        if (
+            document.body.scrollTop > 200 ||
+            document.documentElement.scrollTop > 200
+        ) {
+            if (toTopButton) {
+                toTopButton.classList.remove("hidden");
+            }
+        } else {
+            if (toTopButton) {
+                toTopButton.classList.add("hidden");
+            }
+        }
+    };
+</script>
