@@ -1,39 +1,105 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const navItems = [
+    {
+        title: "Experiencia",
+        label: "experiencia",
+        url: "/#experiencia",
+    },
+    {
+        title: "Proyectos",
+        label: "proyectos",
+        url: "/#proyectos",
+    },
+    {
+        title: "Sobre mí",
+        label: "sobre-mi",
+        url: "/#sobre-mi",
+    },
+    {
+        title: "Contacto",
+        label: "contacto",
+        url: "mailto:mikel@mikeldev.com",
+    },
+];
+---
+
 <header
-    class="flex justify-center items-center py-5 w-auto mx-auto"
-    style="position: sticky; top: 0; z-index: 1000;"
+    class="fixed top-0 z-10 flex items-center justify-center w-full mx-auto mt-2"
 >
-    <nav class="flex flex-row gap-x-10 opacity-80">
-        <a href="#" class="menu-item">Inicio</a>
-        <a href="#experience" class="menu-item">Experiencia</a>
-        <a href="#proyectos" class="menu-item">Proyectos</a>
-        <a href="#sobreMi" class="menu-item">Sobre mi</a>
-        <a href="#contacto" class="menu-item">Contacto</a>
+    <nav
+        class="flex px-3 text-sm font-medium rounded-full text-gray-600 dark:text-gray-200 justify-center items-center"
+    >
+        {
+            navItems.map((link) => (
+                <a
+                    class="relative block px-2 py-2 transition hover:text-purple-500 dark:hover:text-purple-400"
+                    aria-label={link.label}
+                    href={link.url}
+                >
+                    {link.title}
+                </a>
+            ))
+        }
+        <ThemeToggle />
     </nav>
 </header>
 
-<style>
-    .blur-background {
-        transition: all 0.5s ease-in-out;
-        -webkit-transition: all 0.5s ease-in-out;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-    }
+<script>
+    document.addEventListener("astro:page-load", () => {
+        const sections = document.querySelectorAll("section");
+        const navItems = document.querySelectorAll("header nav a");
 
-    .menu-item:hover {
-        opacity: 1;
-    }
-</style>
+        const callback = (entries: any[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    navItems.forEach((item) => {
+                        if (
+                            item.getAttribute("aria-label") == entry.target.id
+                        ) {
+                            item.classList.add("text-yellow-500");
+                        } else {
+                            item.classList.remove("text-yellow-500");
+                        }
+                    });
+                }
+            });
+        };
 
-<script defer>
-    window.addEventListener("scroll", function () {
-        const header = document.querySelector("header");
-        if (window.scrollY > 10) {
-            setTimeout(function () {
-                header.classList.add("blur-background");
-            }, 500); // Add a delay of 1 second (1000 milliseconds)
-        } else {
-            header.classList.remove("blur-background");
-        }
+        const observer = new IntersectionObserver(callback, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.3,
+        });
+
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
+
+        // Cleanup function
+        document.onvisibilitychange = () => {
+            if (document.visibilityState === "hidden") {
+                observer.disconnect();
+            } else {
+                sections.forEach((section) => {
+                    observer.observe(section);
+                });
+            }
+        };
     });
 </script>
+
+<style>
+    nav {
+        animation: nav-shadown 1s linear both;
+        animation-timeline: scroll();
+        animation-range: 0 100px;
+    }
+
+    @keyframes nav-shadown {
+        to {
+            @apply shadow-lg ring-1 backdrop-blur dark:bg-gray-800/90 bg-white/10 ring-white/10;
+        }
+    }
+</style>
