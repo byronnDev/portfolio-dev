@@ -4,6 +4,7 @@ export default {
 		extend: {
 			animation: {
 				'text-gradient': 'text-gradient 1.5s linear infinite',
+				'pulse-slow': 'pulse 6s infinite cubic-bezier(0.4, 0, 0.6, 1)',
 			},
 			keyframes: {
 				'text-gradient': {
@@ -12,6 +13,9 @@ export default {
 					},
 				},
 			},
+		},
+		animation: {
+			'pulse-slow': 'pulse 6s infinite cubic-bezier(0.4, 0, 0.6, 1)',
 		},
 	},
 	plugins: [],
