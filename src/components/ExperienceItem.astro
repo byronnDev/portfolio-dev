@@ -31,6 +31,8 @@ const { title, description, date, link } = Astro.props as ExperienceItemProps;
     link && (
         <a
             href={link}
+            target="_blank"
+            rel="noopener noreferrer"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-zinc-900 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-zinc-100 focus:text-blue-700 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-600 dark:hover:text-white dark:hover:bg-zinc-700 dark:focus:ring-zinc-700"
         >
             Más información
