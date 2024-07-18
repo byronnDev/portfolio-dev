@@ -58,12 +58,12 @@ const THEMES = ["Light", "Dark", "System"];
     }
 </style>
 
-<script is:inline>
-    let remove = null;
+<script>
+    let removeListener: (() => void) | null = null;
     const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
     const themesMenu = document.getElementById("themes-menu");
 
-    const getThemePreference = () => {
+    const getThemePreference = (): string => {
         if (typeof localStorage !== "undefined") {
             return localStorage.getItem("theme") ?? "system";
         }
@@ -73,18 +73,21 @@ const THEMES = ["Light", "Dark", "System"];
             : "light";
     };
 
-    const updateIcon = (themePreference) => {
-        document.querySelectorAll(".theme-toggle-icon").forEach((element) => {
-            element.style.scale = element.id === themePreference ? "1" : "0";
-        });
+    const updateIcon = (themePreference: string): void => {
+        document
+            .querySelectorAll<HTMLElement>(".theme-toggle-icon")
+            .forEach((element) => {
+                element.style.scale =
+                    element.id === themePreference ? "1" : "0";
+            });
     };
 
-    const updateTheme = () => {
-        if (remove != null) {
-            remove();
+    const updateTheme = (): void => {
+        if (removeListener != null) {
+            removeListener();
         }
         matchMedia.addEventListener("change", updateTheme);
-        remove = () => {
+        removeListener = () => {
             matchMedia.removeEventListener("change", updateTheme);
         };
 
@@ -99,25 +102,29 @@ const THEMES = ["Light", "Dark", "System"];
 
     updateTheme();
 
-    document.addEventListener("click", () =>
-        themesMenu.classList.remove("open"),
-    );
+    document.addEventListener("click", () => {
+        themesMenu?.classList.remove("open");
+    });
 
     document
         .getElementById("theme-toggle-btn")
-        .addEventListener("click", (e) => {
+        ?.addEventListener("click", (e) => {
             e.stopPropagation();
-            const isClosed = !themesMenu.classList.contains("open");
-            themesMenu.classList[isClosed ? "add" : "remove"]("open");
+            const isClosed = !themesMenu?.classList.contains("open");
+            themesMenu?.classList[isClosed ? "add" : "remove"]("open");
         });
 
-    document.querySelectorAll(".themes-menu-option").forEach((element) => {
-        element.addEventListener("click", (e) => {
-            localStorage.setItem(
-                "theme",
-                e.target.innerText.toLowerCase().trim(),
-            );
-            updateTheme();
+    document
+        .querySelectorAll<HTMLElement>(".themes-menu-option")
+        .forEach((element) => {
+            element.addEventListener("click", (e) => {
+                if (e.target instanceof HTMLElement) {
+                    localStorage.setItem(
+                        "theme",
+                        e.target.innerText.toLowerCase().trim(),
+                    );
+                    updateTheme();
+                }
+            });
         });
-    });
 </script>
