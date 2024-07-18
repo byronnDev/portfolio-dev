@@ -1,0 +1,260 @@
+---
+import DesktopIcon from "../icons/DesktopIcon.astro";
+import GitHubIcon from "../icons/GitHubIcon.astro";
+import SocialPill from "./SocialPill.astro";
+
+interface Proyect {
+    title: string;
+    description: string;
+    link?: string;
+    github: string;
+    image?: string;
+    tags: Tag[];
+}
+
+interface Tag {
+    name: string;
+    color: string;
+}
+
+const TAG = {
+    JAVA: {
+        name: "Java",
+        color: "bg-red-600", // Rojo tradicionalmente asociado con Java
+    },
+    PYTHON: {
+        name: "Python",
+        color: "bg-blue-400", // Azul claro asociado con el logo de Python
+    },
+    JAVASCRIPT: {
+        name: "JavaScript",
+        color: "bg-yellow-600", // Amarillo tradicionalmente asociado con JavaScript
+    },
+    BASH: {
+        name: "Bash",
+        color: "bg-black", // Negro asociado con la terminal
+    },
+    BATCH: {
+        name: "Batch",
+        color: "bg-gray-600", // Gris oscuro para scripts batch
+    },
+    HTML: {
+        name: "HTML",
+        color: "bg-orange-500", // Naranja asociado con el logo de HTML5
+    },
+    CSS: {
+        name: "CSS",
+        color: "bg-blue-600", // Azul tradicional asociado con CSS
+    },
+    SASS: {
+        name: "SASS",
+        color: "bg-pink-600", // Rosa asociado con el logo de SASS
+    },
+    TYPESCRIPT: {
+        name: "TypeScript",
+        color: "bg-blue-800", // Azul oscuro asociado con el logo de TypeScript
+    },
+    REACT: {
+        name: "React",
+        color: "bg-cyan-400", // Cian asociado con el logo de React
+    },
+    ANGULAR: {
+        name: "Angular",
+        color: "bg-red-700", // Rojo oscuro asociado con el logo de Angular
+    },
+    SPRING_BOOT: {
+        name: "Spring Boot",
+        color: "bg-green-600", // Verde asociado con el logo de Spring Boot
+    },
+    NODE_JS: {
+        name: "Node.js",
+        color: "bg-green-500", // Verde tradicional asociado con Node.js
+    },
+    EXPRESS: {
+        name: "Express",
+        color: "bg-gray-500", // Gris claro asociado con el minimalismo de Express
+    },
+    MYSQL: {
+        name: "MySQL",
+        color: "bg-blue-300", // Azul claro asociado con el logo de MySQL
+    },
+    DOCKER: {
+        name: "Docker",
+        color: "bg-blue-700", // Azul oscuro asociado con el logo de Docker
+    },
+    GITHUB: {
+        name: "GitHub",
+        color: "bg-gray-800", // Gris oscuro tradicionalmente asociado con GitHub
+    },
+    GITLAB: {
+        name: "GitLab",
+        color: "bg-orange-600", // Naranja asociado con el logo de GitLab
+    },
+    JIRA: {
+        name: "Jira",
+        color: "bg-blue-500", // Azul tradicionalmente asociado con Jira
+    },
+    BDD: {
+        name: "BDD",
+        color: "bg-red-500", // Rojo asociado con desarrollo basado en comportamiento
+    },
+    ASTRO: {
+        name: "Astro",
+        color: "bg-purple-600", // Morado asociado con el logo de Astro
+    },
+    PHP: {
+        name: "PHP",
+        color: "bg-indigo-700", // Azul índigo asociado con el logo de PHP
+    },
+    VB_NET: {
+        name: "VB.NET",
+        color: "bg-purple-500", // Morado asociado con Visual Studio
+    },
+    ANDROID: {
+        name: "Android",
+        color: "bg-green-700", // Verde tradicional asociado con el logo de Android
+    },
+    IOS: {
+        name: "iOS",
+        color: "bg-gray-400", // Gris claro asociado con el logo de iOS
+    },
+};
+
+const PROYECTS: Proyect[] = [
+    {
+        title: "Hundir la flota",
+        description:
+            '"Hundir la Flota" es un juego de tablero clásico para dos jugadores: un usuario y el ordenador. Cada jugador tiene un tablero de 10x10 posiciones (A-J, 0-9) donde se colocan los barcos en orientación horizontal o vertical. El objetivo es hundir los barcos del oponente adivinando sus coordenadas.',
+        github: "https://github.com/byronnDev/HundirLaFlota",
+        link: "https://hundir-la-flota.vercel.app/",
+        tags: [TAG.JAVA, TAG.GITHUB],
+    },
+    {
+        title: "HugChat Project in Command Line",
+        description:
+            "HugChat is a project that I made in the subject of Programming in Python, Batch, and SHELL. It connects with the LLM chatbot API using the HuggingFace API. This project is a chatbot that can communicate with you in the command line.",
+        github: "https://github.com/byronnDev/HuggingChatCLI",
+        tags: [TAG.PYTHON, TAG.BASH, TAG.BATCH, TAG.GITHUB],
+    },
+    {
+        title: "Cuatrovientos BlaBlarCar App",
+        description:
+            "Welcome to the Cuatrovientos High School carpooling app – BlaBlarCar! Developed by a group of dedicated students, including Mikel Echeverria, Juan Hidalgo, and Aitor Gorostizu, this app aims to reduce emissions and promote cost-saving by facilitating shared transportation among institute students.",
+        github: "https://github.com/byronnDev/BlaBlaCarCuatrovientos",
+        tags: [TAG.JAVA, TAG.ANDROID, TAG.GITHUB],
+    },
+    {
+        title: "App Mail",
+        description:
+            "App Mail is a project that I made in the subject of Programming in Java. It is a simple email application interface, you can't send emails, but you can see the emails that you have received.",
+        github: "https://github.com/byronnDev/AppMail",
+        tags: [TAG.JAVA, TAG.ANDROID, TAG.GITHUB],
+    },
+];
+---
+
+{
+    (
+        <div class="grid grid-cols-2 gap-4">
+            {PROYECTS.slice(0, 6).map(
+                ({ title, description, link, github, image, tags }) => (
+                    <div class="relative overflow-hidden rounded-xl border border-slate-800 p-[1px] backdrop-blur-3xl">
+                        <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                            <div class="flex flex-col p-4">
+                                <h2 class="text-xl font-bold mb-2">{title}</h2>
+                                <p class="text-gray-300 mb-4">{description}</p>
+                                {image && (
+                                    <img
+                                        src={image}
+                                        alt={title}
+                                        class="mb-4 rounded-lg"
+                                    />
+                                )}
+                                <div class="flex space-x-2">
+                                    {tags.map((tag) => (
+                                        <span
+                                            class={`rounded-md px-2 py-1 text-xs font-medium ${tag.color}`}
+                                        >
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+                                <div class="flex justify-between gap-x-2 mt-4 fixed bottom-0 right-0 m-2">
+                                    {link && (
+                                        <a
+                                            href={link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="opacity-80 hover:opacity-100 hover:underline"
+                                        >
+                                            <DesktopIcon class="size-6" />
+                                        </a>
+                                    )}
+                                    <a
+                                        href={github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-white hover:underline flex items-center gap-x-2 opacity-80 hover:opacity-100"
+                                    >
+                                        <GitHubIcon class="size-6" />
+                                        Ver en GitHub
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ),
+            )}
+            {PROYECTS.length > 6 && (
+                <div class="flex justify-center col-span-2 px-4">
+                    <SocialPill href="https://github.com/byronnDev?tab=repositories">
+                        Ver más proyectos
+                    </SocialPill>
+                </div>
+            )}
+        </div>
+    )
+}
+
+<script defer is:inline>
+    let div;
+    let focused = false;
+    let position = { x: 0, y: 0 };
+    let opacity = 0;
+
+    const updateBackground = () => {
+        if (!div) return;
+        div.style.background = `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,182,255,.1), transparent 40%)`;
+        div.style.opacity = opacity;
+    };
+
+    const handleMouseMove = (e) => {
+        if (focused) return;
+
+        const rect = div.getBoundingClientRect();
+        position = {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        };
+        opacity = 1;
+        updateBackground();
+    };
+
+    const handleMouseEnter = () => {
+        opacity = 1;
+        updateBackground();
+    };
+
+    const handleMouseLeave = () => {
+        opacity = 1;
+        updateBackground();
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        div = document.querySelector(".project-card");
+        div.addEventListener("mousemove", handleMouseMove);
+        div.addEventListener("mouseenter", handleMouseEnter);
+        div.addEventListener("mouseleave", handleMouseLeave);
+    });
+</script>
