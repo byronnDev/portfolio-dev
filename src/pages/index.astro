@@ -13,6 +13,8 @@ import ScrollTopButton from "../components/ScrollTopButton.astro";
 import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
 import AboutMe from "../components/AboutMe.astro";
 import ProfileCheck from "../components/ProfileCheck.astro";
+import Code from "../icons/Code.astro";
+import Proyects from "../components/Proyects.astro";
 ---
 
 <Layout
@@ -78,6 +80,14 @@ import ProfileCheck from "../components/ProfileCheck.astro";
 			Experiencia laboral
 		</h2>
 		<Experiences />
+	</SectionContainer>
+
+	<SectionContainer>
+		<h2 id="proyectos" class="text-2xl font-bold mb-6 flex gap-x-2">
+			<Code class="size-7" />
+			Proyectos
+		</h2>
+		<Proyects />
 	</SectionContainer>
 
 	<SectionContainer>
