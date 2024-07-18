@@ -126,7 +126,6 @@ const PROYECTS: Proyect[] = [
         description:
             '"Hundir la Flota" es un juego de tablero clásico para dos jugadores: un usuario y el ordenador. Cada jugador tiene un tablero de 10x10 posiciones (A-J, 0-9) donde se colocan los barcos en orientación horizontal o vertical. El objetivo es hundir los barcos del oponente adivinando sus coordenadas.',
         github: "https://github.com/byronnDev/HundirLaFlota",
-        link: "https://hundir-la-flota.vercel.app/",
         tags: [TAG.JAVA, TAG.GITHUB],
     },
     {
@@ -155,13 +154,13 @@ const PROYECTS: Proyect[] = [
 
 {
     (
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {PROYECTS.slice(0, 6).map(
                 ({ title, description, link, github, image, tags }) => (
                     <div class="relative overflow-hidden rounded-xl border border-slate-800 p-[1px] backdrop-blur-3xl">
                         <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
                         <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-                            <div class="flex flex-col p-4">
+                            <div class="flex flex-col p-4 pb-10">
                                 <h2 class="text-xl font-bold mb-2">{title}</h2>
                                 <p class="text-gray-300 mb-4">{description}</p>
                                 {image && (
@@ -207,7 +206,7 @@ const PROYECTS: Proyect[] = [
                 ),
             )}
             {PROYECTS.length > 6 && (
-                <div class="flex justify-center col-span-2 px-4">
+                <div class="flex justify-center col-span-1 sm:col-span-2 px-4">
                     <SocialPill href="https://github.com/byronnDev?tab=repositories">
                         Ver más proyectos
                     </SocialPill>
@@ -216,45 +215,3 @@ const PROYECTS: Proyect[] = [
         </div>
     )
 }
-
-<script defer is:inline>
-    let div;
-    let focused = false;
-    let position = { x: 0, y: 0 };
-    let opacity = 0;
-
-    const updateBackground = () => {
-        if (!div) return;
-        div.style.background = `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,182,255,.1), transparent 40%)`;
-        div.style.opacity = opacity;
-    };
-
-    const handleMouseMove = (e) => {
-        if (focused) return;
-
-        const rect = div.getBoundingClientRect();
-        position = {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        };
-        opacity = 1;
-        updateBackground();
-    };
-
-    const handleMouseEnter = () => {
-        opacity = 1;
-        updateBackground();
-    };
-
-    const handleMouseLeave = () => {
-        opacity = 1;
-        updateBackground();
-    };
-
-    document.addEventListener("DOMContentLoaded", () => {
-        div = document.querySelector(".project-card");
-        div.addEventListener("mousemove", handleMouseMove);
-        div.addEventListener("mouseenter", handleMouseEnter);
-        div.addEventListener("mouseleave", handleMouseLeave);
-    });
-</script>
