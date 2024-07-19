@@ -1,13 +1,14 @@
 {
-  "name": "porfolio-dev",
+  "name": "portfolio-dev",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "npx serve dist",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "serve": "npx serve dist"
   },
   "dependencies": {
     "@astrojs/check": "^0.8.1",
@@ -24,5 +25,8 @@
     "svelte": "^4.2.18",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "serve": "^13.0.2"
   }
 }
