@@ -43,3 +43,8 @@ Este proyecto está bajo la Licencia (Apache 2.0) - mira el archivo [LICENSE](LI
 - A la comunidad de Astro por hacer posible este increíble framework
 - A ti, por visitar mi porfolio
 - A todos los que me han apoyado en mi carrera profesional
+
+## TODO
+- [ ] Añadir proyectos via API
+- [ ] Añadir DEMO de proyectos
+- [ ] Añadir modo oscuro funcional
