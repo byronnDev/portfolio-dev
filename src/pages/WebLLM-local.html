@@ -367,7 +367,7 @@
 
 <!-- Go back button -->
 <div class="back-button">
-    <a href="https://mikeldev.com/#proyectos" class="back-button__link">← Volver a mikeldev.com</a>
+    <a href="https://mikeldev.com" class="back-button__link">← Volver a mikeldev.com</a>
 </div>
 
 </html>
@@ -414,7 +414,8 @@
 
     import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm"; // Comentar esta línea si quieres desactivar el modelo
 
-    const SELECTED_MODEL = 'Llama-3-8B-Instruct-q4f32_1-MLC';
+    // https://github.com/mlc-ai/web-llm/blob/main/src/config.ts#L293 para ver los modelos disponibles
+    const SELECTED_MODEL = 'Llama-3-8B-Instruct-q4f32_1-MLC'; // Cambiar por el modelo que quieras usar usando el model_id
 
     const $ = el => document.querySelector(el);
 
