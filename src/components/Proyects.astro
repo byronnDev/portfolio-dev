@@ -127,7 +127,8 @@ const PROYECTS: Proyect[] = [
             "Este proyecto es un chatbot impulsado por inteligencia artificial, diseñado para proporcionar respuestas rápidas y precisas a las preguntas de los usuarios. Utiliza tecnologías avanzadas como WebGPU para acelerar las operaciones de cómputo, asegurando una experiencia de usuario fluida y eficiente.",
         github: "https://github.com/byronnDev/WebLLM-local",
         tags: [TAG.JAVASCRIPT, TAG.HTML, TAG.CSS, TAG.GITHUB],
-        image: "/public/projects/WebLLM-local.webp",
+        image: "/public/WebLLM-local.webp",
+        link: "/WebLLM-local.html",
     },
     {
         title: "Hundir la flota",
@@ -135,7 +136,7 @@ const PROYECTS: Proyect[] = [
             '"Hundir la Flota" es un juego de tablero clásico para dos jugadores: un usuario y el ordenador. Cada jugador tiene un tablero de 10x10 posiciones (A-J, 0-9) donde se colocan los barcos en orientación horizontal o vertical. El objetivo es hundir los barcos del oponente adivinando sus coordenadas.',
         github: "https://github.com/byronnDev/HundirLaFlota",
         tags: [TAG.JAVA, TAG.GITHUB],
-        image: "/public/projects/HundirLaFlota.webp",
+        image: "/public/HundirLaFlota.webp",
     },
     {
         title: "HugChat Project in Command Line",
@@ -198,18 +199,18 @@ const PROYECTS: Proyect[] = [
                                     {link && (
                                         <a
                                             href={link}
-                                            target="_blank"
                                             rel="noopener noreferrer"
-                                            class="opacity-80 hover:opacity-100 transition hover:text-purple-500 dark:hover:text-purple-400"
+                                            class="opacity-80 hover:opacity-100 transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1"
                                         >
                                             <DesktopIcon class="size-6" />
+                                            Ver demo
                                         </a>
                                     )}
                                     <a
                                         href={github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-2 opacity-80 hover:opacity-100"
+                                        class="text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
                                     >
                                         <GitHubIcon class="size-6" />
                                         Ver en GitHub
