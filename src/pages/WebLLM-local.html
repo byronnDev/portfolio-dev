@@ -406,6 +406,12 @@
     }
 
     /* ESTE ES EL CÓDIGO DE LA APLICACIÓN PARA EL CHATBOT */
+
+    // Sacar mensaje en pantalla si tu navegador/dispositivo no soporta WebGPU
+    if (!navigator.gpu) {
+        alert('Tu navegador no soporta WebGPU. Por favor, utiliza un navegador compatible como Chrome o Firefox.');
+    }
+
     import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm"; // Comentar esta línea si quieres desactivar el modelo
 
     const SELECTED_MODEL = 'Llama-3-8B-Instruct-q4f32_1-MLC';
