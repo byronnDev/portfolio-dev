@@ -175,6 +175,13 @@ const PROYECTS: Proyect[] = [
                                 <p class="text-gray-300 mb-4">{description}</p>
                                 {image && (
                                     <a href={link?.length ? link : github}>
+                                        {link && (
+                                            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-black/50">
+                                                <p class="text-white text-2xl font-bold">
+                                                    DEMO
+                                                </p>
+                                            </div>
+                                        )}
                                         <img
                                             src={image}
                                             alt={title}
