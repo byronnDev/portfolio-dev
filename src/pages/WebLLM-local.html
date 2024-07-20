@@ -314,13 +314,6 @@
             height: auto;
         }
 
-        .back-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
-        }
-
         .back-button__link {
             color: #9c9c9c;
             text-decoration: none;
@@ -332,6 +325,13 @@
         .back-button__link:hover {
             color: white;
             transition: all 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                bottom: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
@@ -371,9 +371,6 @@
 </div>
 
 </html>
-
-<!DOCTYPE html>
-<html lang="en">
 
 <script type="module">
     // ESTE CODIGO AÑADE UNA ANIMACIÓN DE ESCRITURA EN EL INPUT PLACEHOLDER
