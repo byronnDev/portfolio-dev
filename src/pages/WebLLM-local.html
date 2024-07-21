@@ -226,6 +226,7 @@
             text-align: center;
             padding: 5px;
             background-color: var(--background-color);
+            z-index: -1;
         }
 
         @media (min-width: 768px) {
@@ -353,7 +354,7 @@
     </main>
     <form id="chat-form">
         <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí...">
-        <button type="submit">Enviar</button>
+        <button type="submit" disabled>Enviar</button>
     </form>
     <small>Desarrollado con ❤️ por Mikel Echeverria</small>
 </body>
@@ -433,7 +434,7 @@
         {
             initProgressCallback: (info) => {
                 console.log(info);
-                $loadingMessage.textContent = `${info.text}%`;
+                $loadingMessage.textContent = `Cargando modelo: ${(info.progress * 100).toFixed(0)}%`;
                 if (info.progress === 1) {
                     $button.removeAttribute('disabled');
                 }
