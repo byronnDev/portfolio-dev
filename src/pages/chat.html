@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT 100% local con WebGPU</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+    <style>
+        :root {
+            --background-color: #1b1b1b;
+            --main-background: #2b2b2b;
+            --text-color: #ffffff;
+            --input-background: #49494985;
+            --button-background: rgba(245, 245, 245, 0.322);
+            --user-message-background: #494949;
+            --bot-message-background: #333;
+            --code-background: #1e1e1e;
+        }
+
+        html {
+            font-size: 16px;
+            color-scheme: light dark;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 95dvh;
+            max-height: 95dvh;
+            /* Custom scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: #333 #1b1b1b;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0 10px;
+        }
+
+        .creditos {
+            text-align: center;
+            font-size: 0.8rem;
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        .creditos a {
+            color: #9c9c9c;
+            text-decoration: none;
+        }
+
+        .creditos a:hover {
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        main {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            /* background-color: var(--main-background); */
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            margin-bottom: 80px;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+
+        .message span {
+            font-size: 0.8rem;
+            color: gray;
+        }
+
+        .message .content {
+            padding: 10px;
+            border-radius: 15px;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message.user .content {
+            background-color: var(--user-message-background);
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        .message.bot .content {
+            background-color: var(--bot-message-background);
+        }
+
+        /* Markdown Styles */
+        .message .content h1,
+        .message .content h2,
+        .message .content h3,
+        .message .content h4,
+        .message .content h5,
+        .message .content h6 {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .message .content p {
+            margin: 0.5em 0;
+        }
+
+        .message .content code {
+            background-color: var(--code-background);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .message .content pre {
+            background-color: var(--code-background);
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .message .content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .message .content blockquote {
+            border-left: 3px solid #ccc;
+            margin: 0;
+            padding-left: 1em;
+            color: #ccc;
+        }
+
+        .message .content ul,
+        .message .content ol {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+
+        .message .content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        form {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background-color: var(--background-color);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--input-background);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: 0;
+            background: var(--button-background);
+            color: var(--text-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover:not([disabled]) {
+            background: #444;
+        }
+
+        button[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        small {
+            position: fixed;
+            bottom: 65px;
+            left: 0;
+            right: 0;
+            font-size: 0.7rem;
+            color: #9c9c9c;
+            text-align: center;
+            padding: 5px;
+            background-color: var(--background-color);
+            z-index: -1;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            main {
+                max-width: 600px;
+                /* border-radius: 15px; */
+                /* box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15); */
+            }
+
+            form {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 40px);
+                max-width: 600px;
+                background-color: transparent;
+                box-shadow: none;
+            }
+
+            small {
+                bottom: 5px;
+            }
+        }
+
+        /* Add these new styles for Markdown rendering */
+        .message .content {
+            padding: 10px;
+            border-radius: 15px;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        .message .content h1,
+        .message .content h2,
+        .message .content h3,
+        .message .content h4,
+        .message .content h5,
+        .message .content h6 {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .message .content p {
+            margin: 0.5em 0;
+        }
+
+        .message .content code {
+            background-color: var(--code-background);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .message .content pre {
+            background-color: var(--code-background);
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .message .content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .message .content blockquote {
+            border-left: 3px solid #ccc;
+            margin: 0;
+            padding-left: 1em;
+            color: #ccc;
+        }
+
+        .message .content ul,
+        .message .content ol {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+
+        .message .content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .back-button__link {
+            color: #9c9c9c;
+            text-decoration: none;
+            font-size: 0.8rem;
+            background-color: var(--background-color);
+            padding: 5px 10px;
+        }
+
+        .back-button__link:hover {
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                bottom: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ChatGPT 100% local con WebGPU</h1>
+    <div class="creditos">
+        Por <a href="https://mikeldev.com" target="_blank" rel="noopener noreferrer">Mikel Echeverria</a>
+    </div>
+    <main>
+        <ul id="chat-messages">
+            <li class="message bot">
+                <span>GPT</span>
+                <div class="content">Hola, soy un modelo de lenguaje de código abierto que puede responder a tus
+                    preguntas. ¡Pregúntame lo
+                    que quieras!</div>
+            </li>
+        </ul>
+    </main>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Escribe tu mensaje aquí...">
+        <button type="submit" disabled>Enviar</button>
+    </form>
+    <small>Desarrollado con ❤️ por Mikel Echeverria</small>
+</body>
+
+<template id="message-template">
+    <li class="message">
+        <span></span>
+        <div class="content"></div>
+    </li>
+</template>
+
+<!-- Go back button -->
+<div class="back-button">
+    <a href="https://mikeldev.com" class="back-button__link">← Volver a mikeldev.com</a>
+</div>
+
+</html>
+
+<script type="module">
+    // ESTE CODIGO AÑADE UNA ANIMACIÓN DE ESCRITURA EN EL INPUT PLACEHOLDER
+    // Create a new thread for the placeholder animation
+    const placeholderThread = async () => {
+        while (true) {
+            await new Promise((resolve) => setTimeout(resolve, 3500));
+            typingAnimation('Escribe tu mensaje aquí...');
+            await new Promise((resolve) => setTimeout(resolve, 3500));
+            typingAnimation('¿Qué quieres saber?');
+            await new Promise((resolve) => setTimeout(resolve, 3500));;
+            typingAnimation('¿Qué es lo que necesitas?');
+            await new Promise((resolve) => setTimeout(resolve, 3500));
+            typingAnimation('¿En qué puedo ayudarte?');
+            await new Promise((resolve) => setTimeout(resolve, 3500));
+            typingAnimation('Pregúntame lo que quieras...');
+        }
+    };
+
+    // Start the placeholder animation thread
+    placeholderThread();
+
+    const typingAnimation = (message) => {
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < message.length) {
+                $input.setAttribute('placeholder', message.substring(0, i + 1) + '|');
+                i++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 100);
+    }
+
+    /* ESTE ES EL CÓDIGO DE LA APLICACIÓN PARA EL CHATBOT */
+
+    // Sacar mensaje en pantalla si tu navegador/dispositivo no soporta WebGPU
+    if (!navigator.gpu) {
+        alert('Tu navegador no soporta WebGPU. Por favor, utiliza un navegador compatible como Chrome o Firefox. O tu dispositivo no soporta WebGPU.');
+    }
+
+    import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm"; // Comentar esta línea si quieres desactivar el modelo
+
+    // https://github.com/mlc-ai/web-llm/blob/main/src/config.ts#L293 para ver los modelos disponibles
+    const SELECTED_MODEL = 'Phi-3-mini-4k-instruct-q4f16_1-MLC'; // Cambiar por el modelo que quieras usar usando el model_id
+
+    const $ = el => document.querySelector(el);
+
+    const $form = $('form');
+    const $input = $('input');
+    const $template = $('#message-template');
+    const $messages = $('ul');
+    const $container = $('main');
+    const $button = $('button');
+    const $loadingMessage = $('small');
+
+    // Cargar el modelo
+    const engine = await CreateMLCEngine(
+        SELECTED_MODEL,
+        {
+            initProgressCallback: (info) => {
+                console.log(info);
+                $loadingMessage.textContent = `Cargando modelo: ${(info.progress * 100).toFixed(0)}%`;
+                if (info.progress === 1) {
+                    $button.removeAttribute('disabled');
+                }
+            }
+        })
+    $loadingMessage.textContent = '';
+
+    // Declare the messages array
+    const messages = [];
+
+    // Evento de envío de formulario
+    $form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const messageText = $input.value.trim();
+
+        if (messageText !== '') $input.value = '';
+
+        addMessage(messageText, 'user');
+        $button.setAttribute('disabled', true);
+
+        const userMessage = {
+            role: 'user',
+            content: messageText,
+        };
+        messages.push(userMessage);
+
+        const chunks = await engine.chat.completions.create({
+            messages,
+            stream: true
+        });
+
+        let replay = "";
+
+        const $botMessage = addMessage("", 'bot');
+
+        for await (const chunk of chunks) {
+            const choice = chunk.choices[0];
+            const content = choice.delta.content ?? "";
+            replay += content;
+            $botMessage.innerHTML = marked.parse(replay);
+            console.log(chunk.choices);
+        }
+
+        $button.removeAttribute('disabled');
+
+        messages.push({
+            role: 'assistant',
+            content: replay,
+        });
+    });
+
+    function addMessage(message, sender) {
+        const $clonedTemplate = $template.content.cloneNode(true);
+        const $newMessage = $clonedTemplate.querySelector('.message');
+
+        const $who = $newMessage.querySelector('span');
+        const $content = $newMessage.querySelector('.content');
+
+        $content.innerHTML = sender === 'user' ? marked.parse(message) : '';
+        $who.textContent = sender === 'user' ? 'Tú' : 'GPT';
+        $newMessage.classList.add(sender);
+
+        // Actualizar scroll
+        $container.scrollTop = $container.scrollHeight;
+
+        $messages.appendChild($newMessage);
+
+        return $content;
+    }
+</script>
