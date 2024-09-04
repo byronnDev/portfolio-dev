@@ -6,9 +6,11 @@ export interface ExperienceItemProps {
     description: string;
     date: string;
     link: string;
+    isFirst?: boolean;
 }
 
-const { title, description, date, link } = Astro.props as ExperienceItemProps;
+const { title, description, date, link, isFirst } =
+    Astro.props as ExperienceItemProps;
 ---
 
 <div
@@ -16,9 +18,10 @@ const { title, description, date, link } = Astro.props as ExperienceItemProps;
 >
 </div>
 <span
-    class="mb-1 text-sm font-normal leading-none text-zinc-400 dark:text-zinc-500"
-    >{date}</span
+    class={`${isFirst ? "text-xl font-bold text-zinc-800 dark:text-zinc-200" : ""} mb-1 text-sm font-normal leading-none text-zinc-400 dark:text-zinc-500`}
 >
+    {date}
+</span>
 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white">
     {title}
 </h3>
