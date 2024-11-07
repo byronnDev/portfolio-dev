@@ -1,7 +1,7 @@
 ---
+import "@fontsource-variable/onest";
 import Background from "../components/Background.astro";
 import Header from "../components/Header.astro";
-import "@fontsource-variable/onest";
 
 interface Props {
 	title: string;
@@ -28,10 +28,6 @@ const { description, title } = Astro.props;
 	</body>
 </html>
 <style is:global>
-	:root {
-		color-scheme: light dark;
-	}
-
 	html {
 		font-family: "Onest Variable", system-ui, sans-serif;
 		scroll-behavior: smooth;
