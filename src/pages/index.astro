@@ -1,21 +1,23 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import AboutMe from "../components/AboutMe.astro";
 import Badge from "../components/Badge.astro";
+import Experiences from "../components/Experiences.astro";
+import Footer from "../components/Footer.astro";
+import ProfileCheck from "../components/ProfileCheck.astro";
+import Proyects from "../components/Proyects.astro";
+import ScrollTopButton from "../components/ScrollTopButton.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import SocialPill from "../components/SocialPill.astro";
+import TextAnimatedGradient from "../components/TextAnimatedGradient";
+import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
+import Code from "../icons/Code.astro";
 import GitHubIcon from "../icons/GitHubIcon.astro";
 import LinkedInIcon from "../icons/LinkedInIcon.astro";
-import XIcon from "../icons/XIcon.astro";
-import SocialPill from "../components/SocialPill.astro";
 import MailIcon from "../icons/MailIcon.astro";
-import Experiences from "../components/Experiences.astro";
-import SectionContainer from "../components/SectionContainer.astro";
-import TextAnimatedGradient from "../components/TextAnimatedGradient";
-import ScrollTopButton from "../components/ScrollTopButton.astro";
-import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
-import AboutMe from "../components/AboutMe.astro";
-import ProfileCheck from "../components/ProfileCheck.astro";
-import Code from "../icons/Code.astro";
-import Proyects from "../components/Proyects.astro";
-import Footer from "../components/Footer.astro";
+import XIcon from "../icons/XIcon.astro";
+import Layout from "../layouts/Layout.astro";
+import myPhoto from "/public/photo.webp";
 ---
 
 <Layout
@@ -27,9 +29,9 @@ import Footer from "../components/Footer.astro";
 		<div
 			class="flex flex-col items-center sm:items-start sm:flex-row sm:gap-x-4"
 		>
-			<img
+			<Image
 				class="rounded-full size-24 sm:size-32 object-cover object-center mb-4 sm:mb-0 lg:mb-4"
-				src="https://github.com/byronnDev.png"
+				src={myPhoto}
 				alt="mikel portrait"
 			/>
 			<div
