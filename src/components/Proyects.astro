@@ -168,11 +168,11 @@ const PROYECTS: Proyect[] = [
             {PROYECTS.slice(0, 6).map(
                 ({ title, description, link, github, image, tags }) => (
                     <div class="relative overflow-hidden rounded-xl border border-slate-800 p-[1px] backdrop-blur-3xl">
-                        <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                        <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-neutral-200 dark:bg-slate-950 px-3 py-1 text-sm font-medium dark:text-white backdrop-blur-3xl">
                             <div class="flex flex-col p-4 pb-10">
                                 <h2 class="text-xl font-bold mb-2">{title}</h2>
-                                <p class="text-gray-300 mb-4">{description}</p>
+                                <p class="dark:text-gray-300 mb-4">{description}</p>
                                 {image && (
                                     <a href={link?.length ? link : github}>
                                         {link && (
@@ -192,7 +192,7 @@ const PROYECTS: Proyect[] = [
                                 <div class="flex space-x-2">
                                     {tags.map((tag) => (
                                         <span
-                                            class={`rounded-md px-2 py-1 text-xs font-medium ${tag.color}`}
+                                            class={`rounded-md px-2 py-1 text-xs text-neutral-100 font-medium ${tag.color}`}
                                         >
                                             {tag.name}
                                         </span>
@@ -212,7 +212,7 @@ const PROYECTS: Proyect[] = [
                                         href={github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
+                                        class="dark:text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
                                     >
                                         <GitHubIcon class="size-6" />
                                         Ver en GitHub
