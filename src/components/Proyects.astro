@@ -122,11 +122,21 @@ const TAG = {
 
 const PROYECTS: Proyect[] = [
     {
+        title: "WebLLM-local",
+        description:
+            "Este proyecto es un chatbot impulsado por inteligencia artificial, diseñado para proporcionar respuestas rápidas y precisas a las preguntas de los usuarios. Utiliza tecnologías avanzadas como WebGPU para acelerar las operaciones de cómputo, asegurando una experiencia de usuario fluida y eficiente.",
+        github: "https://github.com/byronnDev/WebLLM-local",
+        tags: [TAG.JAVASCRIPT, TAG.HTML, TAG.CSS, TAG.GITHUB],
+        image: "/WebLLM-local.webp",
+        link: "https://chat.mikeldev.com",
+    },
+    {
         title: "Hundir la flota",
         description:
             '"Hundir la Flota" es un juego de tablero clásico para dos jugadores: un usuario y el ordenador. Cada jugador tiene un tablero de 10x10 posiciones (A-J, 0-9) donde se colocan los barcos en orientación horizontal o vertical. El objetivo es hundir los barcos del oponente adivinando sus coordenadas.',
         github: "https://github.com/byronnDev/HundirLaFlota",
         tags: [TAG.JAVA, TAG.GITHUB],
+        image: "/HundirLaFlota.webp",
     },
     {
         title: "HugChat Project in Command Line",
@@ -158,22 +168,31 @@ const PROYECTS: Proyect[] = [
             {PROYECTS.slice(0, 6).map(
                 ({ title, description, link, github, image, tags }) => (
                     <div class="relative overflow-hidden rounded-xl border border-slate-800 p-[1px] backdrop-blur-3xl">
-                        <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-neutral-100 dark:bg-slate-950 px-3 py-1 text-sm font-medium dark:text-white backdrop-blur-3xl">
+                        <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
                             <div class="flex flex-col p-4 pb-10">
                                 <h2 class="text-xl font-bold mb-2">{title}</h2>
-                                <p class="dark:text-gray-300 mb-4">{description}</p>
+                                <p class="text-gray-300 mb-4">{description}</p>
                                 {image && (
-                                    <img
-                                        src={image}
-                                        alt={title}
-                                        class="mb-4 rounded-lg"
-                                    />
+                                    <a href={link?.length ? link : github}>
+                                        {link && (
+                                            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-black/50">
+                                                <p class="text-white text-2xl font-bold">
+                                                    DEMO
+                                                </p>
+                                            </div>
+                                        )}
+                                        <img
+                                            src={image}
+                                            alt={title}
+                                            class="mb-4 rounded-lg w-full h-48 object-cover"
+                                        />
+                                    </a>
                                 )}
                                 <div class="flex space-x-2">
                                     {tags.map((tag) => (
                                         <span
-                                            class={`rounded-md px-2 py-1 text-xs text-neutral-100 font-medium ${tag.color}`}
+                                            class={`rounded-md px-2 py-1 text-xs font-medium ${tag.color}`}
                                         >
                                             {tag.name}
                                         </span>
@@ -183,18 +202,17 @@ const PROYECTS: Proyect[] = [
                                     {link && (
                                         <a
                                             href={link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="opacity-80 hover:opacity-100 transition hover:text-purple-500 dark:hover:text-purple-400"
+                                            class="opacity-80 hover:opacity-100 transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1"
                                         >
                                             <DesktopIcon class="size-6" />
+                                            Ver demo
                                         </a>
                                     )}
                                     <a
                                         href={github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="dark:text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-2 opacity-80 hover:opacity-100"
+                                        class="text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
                                     >
                                         <GitHubIcon class="size-6" />
                                         Ver en GitHub
