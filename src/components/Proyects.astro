@@ -167,9 +167,9 @@ const PROYECTS: Proyect[] = [
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {PROYECTS.slice(0, 6).map(
                 ({ title, description, link, github, image, tags }) => (
-                    <div class="relative overflow-hidden rounded-xl border border-slate-800 p-[1px] backdrop-blur-3xl">
+                    <div class="relative overflow-hidden rounded-xl p-[1px] backdrop-blur-3xl">
                         <span class="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-neutral-200 dark:bg-slate-950 px-3 py-1 text-sm font-medium dark:text-white backdrop-blur-3xl">
+                        <div class="inline-flex h-full w-full items-center justify-center rounded-xl bg-neutral-100 dark:bg-slate-950 px-3 py-1 text-sm font-medium dark:text-white backdrop-blur-3xl">
                             <div class="flex flex-col p-4 pb-10">
                                 <h2 class="text-xl font-bold mb-2">{title}</h2>
                                 <p class="dark:text-gray-300 mb-4">{description}</p>

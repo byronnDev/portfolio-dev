@@ -16,9 +16,65 @@ const { description, title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<!-- This line is important for SEO -->
+		<meta name="robots" content="noindex" />
+		<!-- Meta Tags SEO -->
+		<meta
+			name="title"
+			content="Mikel Echeverria - Desarrollador Backend en Pamplona | mikeldev.com"
+		/>
+		<meta
+			name="description"
+			content="Portafolio de Mikel Echeverria, desarrollador Backend de Pamplona, España. Especializado en aplicaciones multiplataforma, diseño web, y soluciones tecnológicas innovadoras."
+		/>
+		<meta
+			name="keywords"
+			content="Mikel Echeverria, mikeldev, desarrollador Backend, Pamplona, aplicaciones multiplataforma, diseño web, soluciones tecnológicas, programación"
+		/>
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href="https://www.mikeldev.com" />
+
+		<!-- Open Graph Tags -->
+		<meta
+			property="og:title"
+			content="Mikel Echeverria - Desarrollador Backend en Pamplona"
+		/>
+		<meta
+			property="og:description"
+			content="Portafolio de Mikel Echeverria, desarrollador Backend de Pamplona, especializado en aplicaciones multiplataforma, diseño web y soluciones innovadoras."
+		/>
+		<meta
+			property="og:image"
+			content="https://raw.githubusercontent.com/byronnDev/portfolio-dev/main/public/web_screenshot.webp"
+		/>
+		<meta property="og:url" content="https://www.mikeldev.com" />
+		<meta property="og:type" content="website" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta
+			name="twitter:title"
+			content="Mikel Echeverria - Desarrollador Backend en Pamplona"
+		/>
+		<meta
+			name="twitter:description"
+			content="Portafolio de Mikel Echeverria, desarrollador Backend especializado en aplicaciones multiplataforma y diseño web innovador."
+		/>
+		<meta
+			name="twitter:image"
+			content="https://www.mikeldev.com/img/mikel-echeverria.jpg"
+		/>
+
+		<!-- Title Tag -->
+		<title>
+			Mikel Echeverria - Desarrollador Backend en Pamplona | mikeldev.com
+		</title>
+
+		<!-- CSS Stylesheets -->
+		<link rel="stylesheet" href="styles.css" />
 		<title>{title}</title>
 	</head>
 	<body>
@@ -41,6 +97,12 @@ const { description, title } = Astro.props;
 	@media (prefers-color-scheme: dark) {
 		html {
 			background-color: #0a0a0a;
+		}
+	}
+
+	@media (prefers-color-scheme: light) {
+		html {
+			background-color: #e5e5e5;
 		}
 	}
 

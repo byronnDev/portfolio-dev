@@ -1,28 +1,28 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import AboutMe from "../components/AboutMe.astro";
 import Badge from "../components/Badge.astro";
+import Experiences from "../components/Experiences.astro";
+import Footer from "../components/Footer.astro";
+import ProfileCheck from "../components/ProfileCheck.astro";
+import Proyects from "../components/Proyects.astro";
+import ScrollTopButton from "../components/ScrollTopButton.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import SocialPill from "../components/SocialPill.astro";
+import TextAnimatedGradient from "../components/TextAnimatedGradient";
+import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
+import Code from "../icons/Code.astro";
 import GitHubIcon from "../icons/GitHubIcon.astro";
 import LinkedInIcon from "../icons/LinkedInIcon.astro";
-import XIcon from "../icons/XIcon.astro";
-import SocialPill from "../components/SocialPill.astro";
 import MailIcon from "../icons/MailIcon.astro";
-import Experiences from "../components/Experiences.astro";
-import SectionContainer from "../components/SectionContainer.astro";
-import TextAnimatedGradient from "../components/TextAnimatedGradient";
-import ScrollTopButton from "../components/ScrollTopButton.astro";
-import BriefcaseIcon from "../icons/BriefcaseIcon.astro";
-import AboutMe from "../components/AboutMe.astro";
-import ProfileCheck from "../components/ProfileCheck.astro";
-import Code from "../icons/Code.astro";
-import Proyects from "../components/Proyects.astro";
-import Image from "astro/components/Image.astro";
+import XIcon from "../icons/XIcon.astro";
+import Layout from "../layouts/Layout.astro";
 import myPhoto from "/public/photo.webp";
-import Footer from "../components/Footer.astro";
 ---
 
 <Layout
-	title="Porfolio de mikeldev - Desarrollador y Programador de Aplicaciones Multiplataforma"
-	description="Mikel Echeverria, Desarrollador Full Stack de Pamplona, España. Apasionado por la tecnología, innovación y el diseño. Comprometido en crear experiencias excepcionales y soluciones creativas."
+	title="Mikel Echeverria - Desarrollador Backend en Pamplona | mikeldev.com"
+	description="Portafolio de Mikel Echeverria, desarrollador Backend de Pamplona, España. Especializado en aplicaciones multiplataforma, diseño web, y soluciones tecnológicas innovadoras."
 />
 <main class="max-w-[screen-sm] px-4 md:px-8 lg:px-16">
 	<SectionContainer class="py-16 sm:py-32 lg:py-44">
@@ -45,7 +45,7 @@ import Footer from "../components/Footer.astro";
 					>
 				</h1>
 				<a
-					href="https://www.linkedin.com/in/mikel-echeverria-b83727253"
+					href="https://www.linkedin.com/in/mikel-echeverria"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="lg:mt-11"
@@ -59,8 +59,8 @@ import Footer from "../components/Footer.astro";
 			class="text-xl sm:text-2xl text-wrap mt-4 sm:mt-0 text-center sm:text-left"
 		>
 			<span class="opacity-80"
-				>Desarrollador Full Stack de Pamplona, España 🇪🇸. Apasionado por
-				la tecnología,</span
+				>Desarrollador Backend de Pamplona, España 🇪🇸. Apasionado por la
+				tecnología,</span
 			> innovación
 			<span class="opacity-80">y el</span> diseño
 			<span class="opacity-80"
@@ -72,21 +72,40 @@ import Footer from "../components/Footer.astro";
 		</h2>
 
 		<ul class="flex flex-wrap justify-center sm:justify-start gap-4 mt-8">
-			<SocialPill href="https://github.com/byronnDev">
-				<GitHubIcon class="size-5 sm:size-6" />
-			</SocialPill>
-			<SocialPill
-				href="https://linkedin.com/in/mikel-echeverria-b83727253"
-			>
-				<LinkedInIcon class="size-5 sm:size-6" />
-			</SocialPill>
-			<SocialPill href="https://x.com/MikelEcheve">
-				<XIcon class="size-5 sm:size-6" />
-			</SocialPill>
-			<SocialPill href="mailto:mikel@mikeldev.com">
-				<MailIcon class="size-5 sm:size-6" />
-				mikel@mikeldev.com
-			</SocialPill>
+			<li>
+				<SocialPill
+					perfilPill
+					href="https://github.com/byronnDev"
+					title="Perfil de Github"
+				>
+					<GitHubIcon class="size-5 sm:size-6" />
+				</SocialPill>
+			</li>
+			<li>
+				<SocialPill
+					href="https://www.linkedin.com/in/mikel-echeverria"
+					title="Perfil de LinkedIn"
+				>
+					<LinkedInIcon class="size-5 sm:size-6" />
+				</SocialPill>
+			</li>
+			<li>
+				<SocialPill
+					href="https://x.com/MikelEcheve"
+					title="Perfil de X"
+				>
+					<XIcon class="size-5 sm:size-6" />
+				</SocialPill>
+			</li>
+			<li>
+				<SocialPill
+					href="mailto:mikel@mikeldev.com"
+					title="Enviar correo"
+				>
+					<MailIcon class="size-5 sm:size-6" />
+					mikel@mikeldev.com
+				</SocialPill>
+			</li>
 		</ul>
 	</SectionContainer>
 
@@ -114,8 +133,6 @@ import Footer from "../components/Footer.astro";
 		<AboutMe />
 	</SectionContainer>
 
-	
 	<ScrollTopButton />
 	<Footer />
 </main>
-

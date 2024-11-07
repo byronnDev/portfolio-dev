@@ -3,7 +3,12 @@
 import ButtonRotatingBackgroundGradient from "./ButtonRotatingBackgroundGradient.tsx";
 ---
 
-<a href={Astro.props.href} target="_blank" rel="noopener noreferrer">
+<a
+    href={Astro.props.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    title={Astro.props.title}
+>
     <ButtonRotatingBackgroundGradient>
         <slot />
     </ButtonRotatingBackgroundGradient>
