@@ -38,6 +38,12 @@ const { description, title } = Astro.props;
 		margin: 0;
 	}
 
+	@media (prefers-color-scheme: dark) {
+		html {
+			background-color: #0a0a0a;
+		}
+	}
+
 	body {
 		color: rgba(17, 17, 17, 0.9);
 		display: flex;
