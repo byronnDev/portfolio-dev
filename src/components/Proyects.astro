@@ -7,7 +7,7 @@ interface Proyect {
     title: string;
     description: string;
     link?: string;
-    github: string;
+    github?: string;
     image?: string;
     tags: Tag[];
 }
@@ -122,6 +122,14 @@ const TAG = {
 
 const PROYECTS: Proyect[] = [
     {
+        title: "Woof & Work Marketing | Agencia de Marketing para Mascotas",
+        description:
+            "Agencia de marketing digital especializada en negocios del sector de mascotas. Impulsa tu negocio veterinario o tienda de mascotas con estrategias personalizadas.",
+        tags: [TAG.REACT, TAG.TYPESCRIPT, TAG.CSS, TAG.GITHUB],
+        image: "/Woof&WorkMarketing.webp",
+        link: "https://www.marketinganimales.com",
+    },
+    {
         title: "WebLLM-local",
         description:
             "Este proyecto es un chatbot impulsado por inteligencia artificial, diseñado para proporcionar respuestas rápidas y precisas a las preguntas de los usuarios. Utiliza tecnologías avanzadas como WebGPU para acelerar las operaciones de cómputo, asegurando una experiencia de usuario fluida y eficiente.",
@@ -174,7 +182,7 @@ const PROYECTS: Proyect[] = [
                                 <h2 class="text-xl font-bold mb-2">{title}</h2>
                                 <p class="dark:text-gray-300 mb-4">{description}</p>
                                 {image && (
-                                    <a href={link?.length ? link : github}>
+                                    <a href={link?.length ? link : github} target="_blank" rel="noopener noreferrer">
                                         {link && (
                                             <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300 hover:bg-black/50">
                                                 <p class="text-white text-2xl font-bold">
@@ -202,21 +210,25 @@ const PROYECTS: Proyect[] = [
                                     {link && (
                                         <a
                                             href={link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             class="opacity-80 hover:opacity-100 transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1"
                                         >
                                             <DesktopIcon class="size-6" />
                                             Ver demo
                                         </a>
                                     )}
-                                    <a
-                                        href={github}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="dark:text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
-                                    >
-                                        <GitHubIcon class="size-6" />
-                                        Ver en GitHub
-                                    </a>
+                                    {github && (
+                                        <a
+                                            href={github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="dark:text-white transition hover:text-purple-500 dark:hover:text-purple-400 flex items-center gap-x-1 opacity-80 hover:opacity-100"
+                                        >
+                                            <GitHubIcon class="size-6" />
+                                            Ver en GitHub
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>
