@@ -1,5 +1,4 @@
 ---
-// Importa el componente ButtonAnimatedGradient
 import ButtonRotatingBackgroundGradient from "./ButtonRotatingBackgroundGradient.tsx";
 ---
 
@@ -7,7 +6,7 @@ import ButtonRotatingBackgroundGradient from "./ButtonRotatingBackgroundGradient
     href={Astro.props.href}
     target="_blank"
     rel="noopener noreferrer"
-    title={Astro.props.title}
+    title={`Perfil de ${Astro.props.title} en redes sociales`}
 >
     <ButtonRotatingBackgroundGradient>
         <slot />
