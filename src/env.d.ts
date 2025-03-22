@@ -1,7 +1,8 @@
 /// <reference types="astro/client" />
+
 interface ImportMetaEnv {
+  readonly GITHUB_URL: string;
   readonly GITHUB_TOKEN: string;
-  // más variables de entorno...
 }
 
 interface ImportMeta {

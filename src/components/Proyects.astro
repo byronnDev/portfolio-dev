@@ -2,7 +2,8 @@
 import DesktopIcon from "../icons/DesktopIcon.astro";
 import GitHubIcon from "../icons/GitHubIcon.astro";
 import SocialPill from "./SocialPill.astro";
-
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN;
+const GITHUB_URL = import.meta.env.GITHUB_URL;
 interface Proyect {
     title: string;
     description: string;
@@ -120,86 +121,6 @@ const TAG = {
     },
 };
 
-// Función para obtener los repositorios anclados de GitHub
-async function fetchPinnedRepos(username: string): Promise<Proyect[]> {
-    try {
-        // En producción, es recomendable usar variables de entorno para el token
-        const token = import.meta.env.GITHUB_TOKEN;
-
-        if (!token) {
-            console.warn('No se encontró el token de GitHub en las variables de entorno');
-            return [];
-        }
-
-        const response = await fetch('https://api.github.com/graphql', {
-            method: 'POST',
-            headers: {
-                'Authorization': `bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                query: `{
-                    user(login: "${username}") {
-                        pinnedItems(first: 6, types: REPOSITORY) {
-                            nodes {
-                                ... on Repository {
-                                    name
-                                    description
-                                    url
-                                    homepageUrl
-                                    languages(first: 3) {
-                                        nodes {
-                                            name
-                                        }
-                                    }
-                                    openGraphImageUrl
-                                }
-                            }
-                        }
-                    }
-                }`
-            }),
-        });
-
-        const data = await response.json();
-
-        if (data.errors) {
-            console.error('Error en la API de GitHub:', data.errors);
-            return [];
-        }
-
-        // Mapear los datos de GitHub a nuestra interfaz Proyect
-        return data.data.user.pinnedItems.nodes.map(repo => {
-            // Mapear los lenguajes a nuestro sistema de etiquetas
-            const repoTags = repo.languages.nodes
-                .map(lang => lang.name)
-                .map(langName => {
-                    // Buscar coincidencia con nuestras etiquetas predefinidas
-                    const tagKey = Object.keys(TAG).find(key =>
-                        TAG[key].name.toLowerCase() === langName.toLowerCase()
-                    );
-                    return tagKey ? TAG[tagKey] : null;
-                })
-                .filter(tag => tag !== null);
-
-            // Siempre añadir la etiqueta GitHub
-            repoTags.push(TAG.GITHUB);
-
-            return {
-                title: repo.name,
-                description: repo.description || `Un repositorio de GitHub llamado ${repo.name}`,
-                github: repo.url,
-                link: repo.homepageUrl,
-                image: repo.openGraphImageUrl,
-                tags: repoTags,
-            };
-        });
-    } catch (error) {
-        console.error('Error al obtener repositorios anclados:', error);
-        return [];
-    }
-}
-
 // Lista de proyectos estáticos como respaldo
 const STATIC_PROYECTS: Proyect[] = [
     {
@@ -258,19 +179,93 @@ const STATIC_PROYECTS: Proyect[] = [
     },
 ];
 
+// Función para obtener los repositorios anclados de GitHub desde el servidor
+async function fetchPinnedRepos(username: string): Promise<Proyect[]> {
+    try {
+        if (!GITHUB_TOKEN) {
+            console.warn('No se encontró el token de GitHub en las variables de entorno');
+            return [];
+        }
+
+        const response = await fetch(GITHUB_URL, {
+            method: 'POST',
+            headers: {
+                'Authorization': `bearer ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: `{
+                    user(login: "${username}") {
+                        pinnedItems(first: 6, types: REPOSITORY) {
+                            nodes {
+                                ... on Repository {
+                                    name
+                                    description
+                                    url
+                                    homepageUrl
+                                    languages(first: 3) {
+                                        nodes {
+                                            name
+                                        }
+                                    }
+                                    openGraphImageUrl
+                                }
+                            }
+                        }
+                    }
+                }`
+            }),
+        });
+
+        const data = await response.json();
+
+        if (data.errors) {
+            console.error('Error en la API de GitHub:', data.errors);
+            return [];
+        }
+
+        // Mapear los datos de GitHub a nuestra interfaz Proyect
+        return data.data.user.pinnedItems.nodes.map((repo: any) => {
+            // Mapear los lenguajes a nuestro sistema de etiquetas
+            const repoTags = repo.languages.nodes
+                .map((lang: any) => lang.name)
+                .map((langName: string) => {
+                    // Buscar coincidencia con nuestras etiquetas predefinidas
+                    const tagKey = Object.keys(TAG).find(key =>
+                        TAG[key as keyof typeof TAG].name.toLowerCase() === langName.toLowerCase()
+                    );
+                    return tagKey ? TAG[tagKey as keyof typeof TAG] : null;
+                })
+                .filter((tag: Tag | null) => tag !== null);
+
+            // Siempre añadir la etiqueta GitHub
+            repoTags.push(TAG.GITHUB);
+
+            return {
+                title: repo.name,
+                description: repo.description || `Un repositorio de GitHub llamado ${repo.name}`,
+                github: repo.url,
+                link: repo.homepageUrl,
+                image: repo.openGraphImageUrl,
+                tags: repoTags,
+            };
+        });
+    } catch (error) {
+        console.error('Error al obtener repositorios anclados:', error);
+        return [];
+    }
+}
+
 // Intentar obtener proyectos dinámicos, usar los estáticos como respaldo
 let PROYECTS: Proyect[] = STATIC_PROYECTS;
 
-if (import.meta.env.GITHUB_TOKEN) {
-    try {
-        const dynamicProyects = await fetchPinnedRepos('byronnDev');
-        if (dynamicProyects && dynamicProyects.length > 0) {
-            PROYECTS = dynamicProyects;
-            console.log('Proyectos cargados desde GitHub API');
-        }
-    } catch (error) {
-        console.error('Error al cargar los repositorios anclados, usando proyectos estáticos:', error);
+try {
+    const githubProyects = await fetchPinnedRepos('byronnDev');
+    if (githubProyects && githubProyects.length > 0) {
+        PROYECTS = githubProyects;
     }
+} catch (error) {
+    console.error('Error al cargar los repositorios anclados, usando proyectos estáticos:', error);
 }
 ---
 
